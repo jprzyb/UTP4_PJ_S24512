@@ -21,14 +21,14 @@ public class TravelData {
     }
     public List<String> getOffersDescriptionsList(String locale, String dateFormat) {
         try {
-            offers = loadOffers(readAll(), locale);
+            offers = loadOffers(readAll());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         translated = translateOffers(locale, dateFormat);
-        return offersAsString();
+        return translatedAsString();
     }
-    private List<String> offersAsString() {
+    public List<String> translatedAsString() {
         List<String> result = new ArrayList<>();
         for(Offer f : translated) result.add(f.getTranslatedOffer());
         return result;
@@ -38,7 +38,7 @@ public class TravelData {
         for(Offer offer : offers) result.add(offer.translate(locale, dateFromat));
         return result;
     }
-    private List<Offer> loadOffers(List<String> lines, String locale) {
+    private List<Offer> loadOffers(List<String> lines) {
         List<Offer> result = new ArrayList<>();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         for(String line : lines){
@@ -79,5 +79,18 @@ public class TravelData {
         }
 
         return allLines;
+    }
+    public List<Offer> getOffers(){
+        return offers;
+    }
+    public List<String> translatedAsStringGUI() {
+        List<String> result = new ArrayList<>();
+        for(Offer f : translated) result.add(f.getFullTranslated());
+        return result;
+    }
+    public List<String> offersAsStringGUI() {
+        List<String> result = new ArrayList<>();
+        for(Offer f : offers) result.add(f.getFullOffer());
+        return result;
     }
 }

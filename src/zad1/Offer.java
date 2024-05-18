@@ -43,7 +43,8 @@ public class Offer {
         }
     }
 
-    private Offer(String country, String startDate, String endDate, String location, String price, String currency) {
+    private Offer(Locale code, String country, String startDate, String endDate, String location, String price, String currency) {
+        this.code = code;
         this.country = country;
         this.tStartDate = startDate;
         this.tEndDate = endDate;
@@ -56,11 +57,13 @@ public class Offer {
         destLocale = Locale.forLanguageTag(dest.split("_")[0]);
         NumberFormat numberFormat = NumberFormat.getInstance(destLocale);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
+        String loc = location;
         return new Offer(
+                code,
                 translateCountry(),
                 simpleDateFormat.format(startDate),
                 simpleDateFormat.format(endDate),
-                translateWord(location),
+                translateWord(loc),
                 numberFormat.format(price),
                 currency
         );
@@ -77,5 +80,12 @@ public class Offer {
 
     public String getTranslatedOffer(){
         return country+"\t"+tStartDate+"\t"+tEndDate+"\t"+location+"\t"+tPrice+"\t"+currency;
+    }
+    public String getFullTranslated(){
+        return code.getLanguage()+"\t"+country+"\t"+tStartDate+"\t"+tEndDate+"\t"+location+"\t"+tPrice+"\t"+currency;
+    }
+    public String getFullOffer(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return code.getLanguage()+"\t"+country+"\t"+simpleDateFormat.format(startDate)+"\t"+simpleDateFormat.format(endDate)+"\t"+location+"\t"+price+"\t"+currency;
     }
 }
