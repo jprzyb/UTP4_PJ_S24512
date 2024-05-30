@@ -25,7 +25,7 @@ public class TravelData {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        translated = translateOffers(locale, dateFormat);
+        translated = translateOffers(new Locale(locale.split("_")[0],locale.split("_")[1]), dateFormat);
         return translatedAsString();
     }
     public List<String> translatedAsString() {
@@ -33,7 +33,7 @@ public class TravelData {
         for(Offer f : translated) result.add(f.getTranslatedOffer());
         return result;
     }
-    private List<Offer> translateOffers(String locale, String dateFromat) {
+    private List<Offer> translateOffers(Locale locale, String dateFromat) {
         List<Offer> result = new ArrayList<>();
         for(Offer offer : offers) result.add(offer.translate(locale, dateFromat));
         return result;
@@ -47,7 +47,7 @@ public class TravelData {
             try {
                 result.add(
                         new Offer(
-                                new Locale(fields[0].split("_")[0]), // code
+                                new Locale(fields[0]), // code
                                 fields[1], // name
                                 simpleDateFormat.parse(fields[2]), // start date
                                 simpleDateFormat.parse(fields[3]), // end date
