@@ -73,7 +73,7 @@ public class TravelData {
                             List<String> lines = Files.readAllLines(filePath);
                             allLines.addAll(lines);
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            e.getMessage();
                         }
                     });
         }

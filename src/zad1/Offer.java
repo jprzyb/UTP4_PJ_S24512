@@ -35,7 +35,7 @@ public class Offer {
         this.price = price;
         this.currency = currency;
         try  {
-            InputStream input = Files.newInputStream(Paths.get("dic.properties"));
+            InputStream input = Files.newInputStream(Paths.get("data/dictionary.properties"));
             dictionary = new Properties();
             dictionary.load(input);
         } catch (IOException e) {
